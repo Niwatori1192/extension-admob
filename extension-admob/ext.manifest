@@ -5,14 +5,6 @@ platforms:
         context:
             aaptExtraPackages: ["androidx.work", "com.google.android.gms.common", "androidx.startup"]
 
-    armv7-ios:
-        context:
-            frameworks: ['AppTrackingTransparency']
-
-    arm64-ios:
-        context:
-            frameworks: ['AppTrackingTransparency']
-
-    x86_64-ios:
+    ios:
         context:
             frameworks: ['AppTrackingTransparency']

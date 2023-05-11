@@ -1,5 +1,15 @@
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://artifact.bytedance.com/repository/pangle/'
+    }
+}
+
+
 dependencies {
   // https://developers.google.com/admob/android/quick-start#example_app-level_buildgradle_excerpt
   implementation 'com.google.android.gms:play-services-ads:22.0.0'
   implementation 'com.google.ads.mediation:applovin:11.9.0.0'
+  implementation 'com.google.ads.mediation:pangle:5.1.0.9.0'
+  implementation 'com.google.ads.mediation:facebook:6.14.0.0'
 }
