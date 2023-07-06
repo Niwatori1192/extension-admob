@@ -1,7 +1,7 @@
 platform :ios, '14.0'
 pod 'Google-Mobile-Ads-SDK'
 pod 'GoogleMobileAdsMediationAppLovin'
-pod 'GoogleMobileAdsMediationPangle'
+# pod 'GoogleMobileAdsMediationPangle'
 pod 'GoogleMobileAdsMediationFacebook'
 # pod 'GoogleMobileAdsMediationAdColony'
 pod 'GoogleMobileAdsMediationVungle'
