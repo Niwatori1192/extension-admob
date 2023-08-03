@@ -177,7 +177,7 @@ public class AdmobJNI {
                 initialize();
               }
             }
-          )
+          );
         },
         (OnConsentInfoUpdateFailureListener) requestConsentError -> {
           // error
