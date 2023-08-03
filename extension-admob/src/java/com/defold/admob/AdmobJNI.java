@@ -35,7 +35,10 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+// UMP
+import java.util.concurrent.atomic.AtomicBoolean;
 import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentDebugSettings;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.FormError;
 import com.google.android.ump.UserMessagingPlatform;
