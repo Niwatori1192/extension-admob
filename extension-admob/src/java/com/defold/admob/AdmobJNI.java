@@ -35,6 +35,11 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.FormError;
+import com.google.android.ump.UserMessagingPlatform;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -91,6 +96,10 @@ public class AdmobJNI {
 
   // END CONSTANTS
 
+  // UMP
+  private ConsentInformation consentInformation;
+  private final AtomicBoolean isMobileAdsInitializeCalled = new AtomicBoolean(false);
+
 
   private Activity activity;
 
@@ -99,6 +108,10 @@ public class AdmobJNI {
   }
 
   public void initialize() {
+      if (isMobileAdsInitializeCalled.getAndSet(true)) {
+        return;
+      }
+
       MobileAds.initialize(activity, new OnInitializationCompleteListener() {
           @Override
           public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -135,7 +148,44 @@ public class AdmobJNI {
   }
 
   public void requestUMP() {
-    sendSimpleMessage(MSG_UMP, EVENT_NOT_SUPPORTED);
+    // TEST 
+    ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(this)
+        .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
+        // .addTestDeviceHashedId("TEST-DEVICE-HASHED-ID")
+        .build();
+
+    ConsentRequestParameters params = new ConsentRequestParameters
+        .Builder()
+        .setTagForUnderAgeOfConsent(false)
+        .setConsentDebugSettings(debugSettings)
+        .build();
+
+    consentInformation = UserMessagingPlatform.getConsentInformation(this);
+    consentInformation.requestConsentInfoUpdate(
+        this,
+        params,
+        (OnConsentInfoUpdateSuccessListener) () -> {
+          UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+            this,
+            (OnConsentFormDismissedListener) loadAndShowError -> {
+              if (loadAndShowError != null) {
+                // error
+              }
+
+              // Consent has been gathered.
+              if (consentInformation.canRequestAds) {
+                initialize();
+              }
+            }
+          )
+        },
+        (OnConsentInfoUpdateFailureListener) requestConsentError -> {
+          // error
+        });
+
+    if (consentInformation.canRequestAds) {
+      initialize();
+    }
   }
 
   // https://www.baeldung.com/java-json-escaping
