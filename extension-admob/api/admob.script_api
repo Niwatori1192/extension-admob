@@ -184,6 +184,15 @@
 
 #*****************************************************************************************************
 
+  - name: request_ump
+    type: function
+    desc: User Messaging Platform（UMP）SDK.
+          Original docs
+          [Android](https://developers.google.com/admob/android/privacy)
+          [iOS](https://developers.google.com/admob/ios/privacy)
+
+#*****************************************************************************************************
+
   - name: show_ad_inspector
     type: function
     desc: Show Ad Inspector. This is an in-app overlay that enables authorized devices to perform
@@ -402,6 +411,9 @@
     type: number
 
   - name: MSG_IDFA
+    type: number
+
+  - name: MSG_UMP
     type: number
 
 #*****************************************************************************************************

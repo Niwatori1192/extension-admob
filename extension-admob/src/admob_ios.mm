@@ -429,14 +429,14 @@ void RequestUMP() {
         requestConsentInfoUpdateWithParameters:parameters
             completionHandler:^(NSError *_Nullable requestConsentError) {
         if (requestConsentError) {
-            dmLogInfo("UMP request Error: %@", requestConsentError.localizedDescription);
+            // dmLogInfo("UMP request Error: %@", requestConsentError.localizedDescription);
             return;
         }
 
         [UMPConsentForm loadAndPresentIfRequiredFromViewController:uiViewController
             completionHandler:^(NSError *loadAndPresentError) {
             if (loadAndPresentError) {
-                dmLogInfo("UMP load Error: %@", loadAndPresentError.localizedDescription);
+                // dmLogInfo("UMP load Error: %@", loadAndPresentError.localizedDescription);
                 return;
             }
 
