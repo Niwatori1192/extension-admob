@@ -167,10 +167,10 @@ public class AdmobJNI {
     consentInformation.requestConsentInfoUpdate(
         activity,
         params,
-        (OnConsentInfoUpdateSuccessListener) () -> {
+        (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
           UserMessagingPlatform.loadAndShowConsentFormIfRequired(
             activity,
-            (OnConsentFormDismissedListener) loadAndShowError -> {
+            (ConsentInformation.OnConsentFormDismissedListener) loadAndShowError -> {
               if (loadAndShowError != null) {
                 // error
               }
@@ -182,7 +182,7 @@ public class AdmobJNI {
             }
           );
         },
-        (OnConsentInfoUpdateFailureListener) requestConsentError -> {
+        (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
           // error
         });
 
