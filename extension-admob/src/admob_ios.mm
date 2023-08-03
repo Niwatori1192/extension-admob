@@ -427,7 +427,7 @@ void RequestUMP() {
 
     // TEST
     UMPDebugSettings *debugSettings = [[UMPDebugSettings alloc] init];
-    // debugSettings.testDeviceIdentifiers = @[ @"TEST-DEVICE-HASHED-ID" ];
+    debugSettings.testDeviceIdentifiers = @[ @"561B966C-84C9-4D49-AC68-714B39D13EBF" ];
     debugSettings.geography = UMPDebugGeographyEEA;
     parameters.debugSettings = debugSettings;
 
