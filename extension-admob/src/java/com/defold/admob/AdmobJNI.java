@@ -167,24 +167,33 @@ public class AdmobJNI {
     consentInformation.requestConsentInfoUpdate(
         activity,
         params,
-        (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
-          UserMessagingPlatform.loadAndShowConsentFormIfRequired(
-            activity,
-            (ConsentInformation.OnConsentFormDismissedListener) loadAndShowError -> {
-              if (loadAndShowError != null) {
-                // error
-              }
-
-              // Consent has been gathered.
-              if (consentInformation.canRequestAds) {
-                initialize();
-              }
+        new ConsentInformation.OnConsentInfoUpdateSuccessListener() {
+            @Override
+            public void onConsentInfoUpdateSuccess() {
+                // When ConsentInformation is successfully updated.
+                if (consentInformation.isConsentFormAvailable()) {
+                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+                        activity,
+                        new UserMessagingPlatform.OnConsentFormDismissedListener() {
+                            @Override
+                            public void onConsentFormDismissed(@Nullable FormError formError) {
+                                // Handle dismissal.
+                                if (consentInformation.canRequestAds) {
+                                    initialize();
+                                }
+                            }
+                        }
+                    );
+                }
             }
-          );
         },
-        (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
-          // error
-        });
+        new ConsentInformation.OnConsentInfoUpdateFailureListener() {
+            @Override
+            public void onConsentInfoUpdateFailure(FormError formError) {
+                // Handle failure.
+            }
+        }
+    );
 
     if (consentInformation.canRequestAds) {
       initialize();
