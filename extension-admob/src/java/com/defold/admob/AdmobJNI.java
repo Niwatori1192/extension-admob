@@ -152,7 +152,7 @@ public class AdmobJNI {
 
   public void requestUMP() {
     // TEST 
-    ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(this)
+    ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(activity)
         .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
         // .addTestDeviceHashedId("TEST-DEVICE-HASHED-ID")
         .build();
@@ -163,13 +163,13 @@ public class AdmobJNI {
         .setConsentDebugSettings(debugSettings)
         .build();
 
-    consentInformation = UserMessagingPlatform.getConsentInformation(this);
+    consentInformation = UserMessagingPlatform.getConsentInformation(activity);
     consentInformation.requestConsentInfoUpdate(
-        this,
+        activity,
         params,
         (OnConsentInfoUpdateSuccessListener) () -> {
           UserMessagingPlatform.loadAndShowConsentFormIfRequired(
-            this,
+            activity,
             (OnConsentFormDismissedListener) loadAndShowError -> {
               if (loadAndShowError != null) {
                 // error
