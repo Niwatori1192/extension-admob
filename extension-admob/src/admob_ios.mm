@@ -10,6 +10,11 @@
 #import <AppTrackingTransparency/ATTrackingManager.h>
 #endif
 
+// UMP
+#if __has_include(<UserMessagingPlatform/UserMessagingPlatform.h>)
+#import <UserMessagingPlatform/UserMessagingPlatform.h>
+#endif
+
 
 @interface AdmobExtInterstitialAdDelegate : NSObject<GADFullScreenContentDelegate>
 @end
@@ -86,7 +91,7 @@ namespace dmAdmob {
         [[GADMobileAds sharedInstance]
         startWithCompletionHandler:^(GADInitializationStatus *_Nonnull status) {
             SendSimpleMessage(MSG_INITIALIZATION, EVENT_COMPLETE);
-        }];
+        }];        
     }
 
 //--------------------------------------------------
@@ -407,6 +412,45 @@ void ShowAdInspector() {
 
 void ActivateApp() {
 }
+
+void StartOnce() {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Initialize();
+    });
+}
+
+void RequestUMP() {
+    // Create a UMPRequestParameters object
+    UMPRequestParameters *parameters = [[UMPRequestParameters alloc] init];
+    parameters.tagForUnderAgeOfConsent = NO;
+
+    [UMPConsentInformation.sharedInstance
+        requestConsentInfoUpdateWithParameters:parameters
+            completionHandler:^(NSError *_Nullable requestConsentError) {
+        if (requestConsentError) {
+            dmLogInfo("UMP request Error: %@", requestConsentError.localizedDescription);
+            return;
+        }
+
+        [UMPConsentForm loadAndPresentIfRequiredFromViewController:uiViewController
+            completionHandler:^(NSError *loadAndPresentError) {
+            if (loadAndPresentError) {
+                dmLogInfo("UMP load Error: %@", loadAndPresentError.localizedDescription);
+                return;
+            }
+
+            if (UMPConsentInformation.sharedInstance.canRequestAds) {
+                StartOnce();
+            }
+        }];
+    }];
+
+    if (UMPConsentInformation.sharedInstance.canRequestAds) {
+        StartOnce();
+    }
+}
+
 
 } //namespace
 

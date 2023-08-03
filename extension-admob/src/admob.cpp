@@ -149,6 +149,13 @@ static int Lua_ShowAdInspector(lua_State* L)
     return 0;
 }
 
+static int Lua_RequestUMP(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    RequestUMP();
+    return 0;
+}
+
 static const luaL_reg Module_methods[] =
 {
     {"initialize", Lua_Initialize},
@@ -167,6 +174,7 @@ static const luaL_reg Module_methods[] =
     {"set_privacy_settings", Lua_SetPrivacySettings},
     {"request_idfa", Lua_RequestIDFA},
     {"show_ad_inspector", Lua_ShowAdInspector},
+    {"request_ump", Lua_RequestUMP},
     {0, 0}
 };
 
@@ -184,6 +192,7 @@ static void LuaInit(lua_State* L)
     SETCONSTANT(MSG_BANNER)
     SETCONSTANT(MSG_INITIALIZATION)
     SETCONSTANT(MSG_IDFA)
+    SETCONSTANT(MSG_UMP)
 
     SETCONSTANT(EVENT_CLOSED)
     SETCONSTANT(EVENT_FAILED_TO_SHOW)

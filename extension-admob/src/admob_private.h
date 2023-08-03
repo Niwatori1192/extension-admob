@@ -46,6 +46,9 @@ void RequestIDFA();
 void ShowAdInspector();
 void ActivateApp();
 
+void StartOnce();
+void RequestUMP();
+
 bool IsInterstitialLoaded();
 bool IsRewardedLoaded();
 bool IsBannerLoaded();

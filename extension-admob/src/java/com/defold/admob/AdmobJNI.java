@@ -52,6 +52,7 @@ public class AdmobJNI {
   private static final int MSG_BANNER =               3;
   private static final int MSG_INITIALIZATION =       4;
   private static final int MSG_IDFA =                 5;
+  private static final int MSG_UMP =                  6;
 
   private static final int EVENT_CLOSED =             1;
   private static final int EVENT_FAILED_TO_SHOW =     2;
@@ -131,6 +132,10 @@ public class AdmobJNI {
         });
       }
     });
+  }
+
+  public void requestUMP() {
+    sendSimpleMessage(MSG_UMP, EVENT_NOT_SUPPORTED);
   }
 
   // https://www.baeldung.com/java-json-escaping
