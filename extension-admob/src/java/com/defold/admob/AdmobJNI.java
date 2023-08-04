@@ -113,8 +113,11 @@ public class AdmobJNI {
 
   public void initialize() {
       if (isMobileAdsInitializeCalled.getAndSet(true)) {
+        Log.d(TAG, 'initialize1');
         return;
       }
+
+      Log.d(TAG, 'initialize2');
 
       MobileAds.initialize(activity, new OnInitializationCompleteListener() {
           @Override
@@ -174,10 +177,12 @@ public class AdmobJNI {
             (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
               if (loadAndShowError != null) {
                 // error
+                Log.d(TAG, 'error1');
               }
 
               // Consent has been gathered.
               if (consentInformation.canRequestAds()) {
+                Log.d(TAG, 'canRequestAds1');
                 initialize();
               }
             }
@@ -185,9 +190,11 @@ public class AdmobJNI {
         },
         (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
           // error
+          Log.d(TAG, 'error2');
         });
 
     if (consentInformation.canRequestAds()) {
+      Log.d(TAG, 'canRequestAds2');
       initialize();
     }
   }
