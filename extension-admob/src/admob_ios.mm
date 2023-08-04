@@ -442,12 +442,6 @@ void RequestUMP() {
     UMPRequestParameters *parameters = [[UMPRequestParameters alloc] init];
     parameters.tagForUnderAgeOfConsent = NO;
 
-    // TEST
-    // UMPDebugSettings *debugSettings = [[UMPDebugSettings alloc] init];
-    // debugSettings.testDeviceIdentifiers = @[ @"561B966C-84C9-4D49-AC68-714B39D13EBF" ];
-    // debugSettings.geography = UMPDebugGeographyEEA;
-    // parameters.debugSettings = debugSettings;
-
     [UMPConsentInformation.sharedInstance
         requestConsentInfoUpdateWithParameters:parameters
             completionHandler:^(NSError *_Nullable requestConsentError) {
