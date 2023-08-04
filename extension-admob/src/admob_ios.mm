@@ -88,6 +88,9 @@ namespace dmAdmob {
     }
 
     void Initialize() {
+        // Facebookの初期化処理
+        [FBAdSettings setAdvertiserTrackingEnabled:YES];
+        
         [[GADMobileAds sharedInstance]
         startWithCompletionHandler:^(GADInitializationStatus *_Nonnull status) {
             SendSimpleMessage(MSG_INITIALIZATION, EVENT_COMPLETE);
