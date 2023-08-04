@@ -15,6 +15,8 @@
 #import <UserMessagingPlatform/UserMessagingPlatform.h>
 #endif
 
+// Facebook
+#include <FBAudienceNetwork/FBAdSettings.h>
 
 @interface AdmobExtInterstitialAdDelegate : NSObject<GADFullScreenContentDelegate>
 @end
