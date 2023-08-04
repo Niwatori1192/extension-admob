@@ -155,7 +155,7 @@ public class AdmobJNI {
     // TEST 
     ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(activity)
         .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
-        // .addTestDeviceHashedId("TEST-DEVICE-HASHED-ID")
+        .addTestDeviceHashedId("C980902DAB86FD7981059696F389324C")
         .build();
 
     ConsentRequestParameters params = new ConsentRequestParameters
