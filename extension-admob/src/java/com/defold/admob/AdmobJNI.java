@@ -37,6 +37,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 // UMP
 import java.util.concurrent.atomic.AtomicBoolean;
+import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentDebugSettings;
 import com.google.android.ump.ConsentRequestParameters;
@@ -167,35 +168,26 @@ public class AdmobJNI {
     consentInformation.requestConsentInfoUpdate(
         activity,
         params,
-        new ConsentInformation.OnConsentInfoUpdateSuccessListener() {
-            @Override
-            public void onConsentInfoUpdateSuccess() {
-                // When ConsentInformation is successfully updated.
-                if (consentInformation.isConsentFormAvailable()) {
-                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
-                        activity,
-                        new UserMessagingPlatform.OnConsentFormDismissedListener() {
-                            @Override
-                            public void onConsentFormDismissed(@Nullable FormError formError) {
-                                // Handle dismissal.
-                                if (consentInformation.canRequestAds) {
-                                    initialize();
-                                }
-                            }
-                        }
-                    );
-                }
-            }
-        },
-        new ConsentInformation.OnConsentInfoUpdateFailureListener() {
-            @Override
-            public void onConsentInfoUpdateFailure(FormError formError) {
-                // Handle failure.
-            }
-        }
-    );
+        (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
+          UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+            activity,
+            (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
+              if (loadAndShowError != null) {
+                // error
+              }
 
-    if (consentInformation.canRequestAds) {
+              // Consent has been gathered.
+              if (consentInformation.canRequestAds()) {
+                initialize();
+              }
+            }
+          );
+        },
+        (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
+          // error
+        });
+
+    if (consentInformation.canRequestAds()) {
       initialize();
     }
   }
