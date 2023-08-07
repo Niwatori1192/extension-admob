@@ -1,5 +1,5 @@
 platform :ios, '14.0'
-pod 'Google-Mobile-Ads-SDK'
+pod 'Google-Mobile-Ads-SDK', '10.8.0'
 # pod 'GoogleMobileAdsMediationAppLovin'
 # armv7対応のバージョンを指定する(動かない)
 # pod 'GoogleMobileAdsMediationPangle', '~> 4.9.0.8.0'
