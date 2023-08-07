@@ -16,7 +16,7 @@
 #endif
 
 // Facebook
-#import <FBAudienceNetwork/FBAdSettings.h>
+// #import <FBAudienceNetwork/FBAdSettings.h>
 
 @interface AdmobExtInterstitialAdDelegate : NSObject<GADFullScreenContentDelegate>
 @end
@@ -91,19 +91,19 @@ namespace dmAdmob {
 
     void Initialize() {
         // Meta Audience Networkの初期化
-        ATTrackingManagerAuthorizationStatus status = [ATTrackingManager trackingAuthorizationStatus];
-        switch (status) {
-            case ATTrackingManagerAuthorizationStatusAuthorized:
-            // IDFAの取得が許可されている場合
-            [FBAdSettings setAdvertiserTrackingEnabled:YES];
-            break;
-            case ATTrackingManagerAuthorizationStatusDenied:
-            case ATTrackingManagerAuthorizationStatusRestricted:
-            case ATTrackingManagerAuthorizationStatusNotDetermined:
-            // IDFAの取得が拒否されている、またはまだ決まっていない場合
-            [FBAdSettings setAdvertiserTrackingEnabled:NO];
-            break;
-        }
+        // ATTrackingManagerAuthorizationStatus status = [ATTrackingManager trackingAuthorizationStatus];
+        // switch (status) {
+        //     case ATTrackingManagerAuthorizationStatusAuthorized:
+        //     // IDFAの取得が許可されている場合
+        //     [FBAdSettings setAdvertiserTrackingEnabled:YES];
+        //     break;
+        //     case ATTrackingManagerAuthorizationStatusDenied:
+        //     case ATTrackingManagerAuthorizationStatusRestricted:
+        //     case ATTrackingManagerAuthorizationStatusNotDetermined:
+        //     // IDFAの取得が拒否されている、またはまだ決まっていない場合
+        //     [FBAdSettings setAdvertiserTrackingEnabled:NO];
+        //     break;
+        // }
         
         [[GADMobileAds sharedInstance]
         startWithCompletionHandler:^(GADInitializationStatus *_Nonnull status) {
